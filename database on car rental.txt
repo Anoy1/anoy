@@ -1,0 +1,58 @@
+create database car_rental;
+use car_rental;
+create table user
+(
+Userid int primary key not null AUTO_INCREMENT
+Username varchar(45) not null,
+Password varchar(45) not null,
+Active binary not null,
+CreatedOn datetime not null
+);
+creatre table location
+(
+Locid int PRIMARY KEY AUTO_INCREMENT not null,
+LocationCode varchar(10) not null,
+State varchar(10) not null,
+Street varchar(10) not null,
+Country varchar(10) not null,
+ZipCode int not null,
+Openhours time not null,
+ClosedHours time not null
+);
+
+create table rate
+(
+Rateid int PRIMARY KEY AUTO_INCREMENT NOT NULL,
+ActiveDate date not null,
+BasePrice float not null,
+Tax float not null,
+Active binary not null,
+FOREIGN KEY (Vehid) REFERENCES vehicle(Vehicleid),
+);
+
+create table vehicle
+(
+Vehicleid int PRIMARY KEY AUTO_INCREMENT NOT NULL,
+VehCode varchar(10) not null,
+VehName varchar(45) not null,
+VehDescription varchar(45),
+Status Boolean not null,
+NoOfSeats int not null,
+NoOfBags int not null
+);
+
+create table reservation
+(
+resid int PRIMARY KEY AUTO_INCREMENT NOT NULL,
+ConfirmationNum int not null,
+DateTime Time not null,
+BaseAmount float not null,
+Tax float not null
+Discount float not null,
+ToatalAmount float not null,
+FOREIGN KEY (PickupLocid) REFERENCES location(Locid),
+FOREIGN KEY (DropoffLocid) REFERENCES location(Locid),
+FOREIGN KEY (Vehid) REFERENCES vehicle(Vehicleid),
+FOREIGN KEY (Userid) REFERENCES user(Userid),
+FOREIGN KEY (OldResid) REFERENCES reservation(resid)
+);
